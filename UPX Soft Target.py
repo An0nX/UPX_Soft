@@ -9,7 +9,7 @@ from config import *
 ctypes.windll.kernel32.SetConsoleTitleW('UPX Soft by httpshotmaker')
 
 def clean():
-	os.system('clear')
+	os.system('cls' if os.name == 'nt' else 'clear')
 
 clean()
 
