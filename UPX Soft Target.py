@@ -3,7 +3,6 @@ import os
 from os import walk
 from time import sleep
 import ctypes
-from win32api import GetLogicalDriveStrings
 from colorama import Fore
 from config import *
 
