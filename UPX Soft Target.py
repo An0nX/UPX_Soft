@@ -3,6 +3,7 @@ import os
 from os import walk
 from time import sleep
 import ctypes
+from win32api import GetLogicalDriveStrings
 from colorama import Fore
 from config import *
 
@@ -25,7 +26,7 @@ def banner():
 		)
 banner()
 
-print(Fore.GREEN + 'Введите путь до папки, до программы или имя диска (Пример: D:\\\): ')
+print(Fore.GREEN + 'Введите путь до папки, до программы или имя диска (Пример: D:\\): ')
 path = input()
 i = 0
 for root, _, _ in walk(path):
@@ -36,15 +37,16 @@ for root, _, _ in walk(path):
 		soft = glob.glob(targetPattern)
 		if soft == list():
 			continue
-		if f'{os.getenv("SystemDrive")}\\Windows' in root:
-			continue
+		if f'{os.getenv("SystemDrive")}' in root:
+			print(Fore.RED + 'Использование программы на системном диске невозможно')
+			break
 		i += 1
-		ctypes.windll.kernel32.SetConsoleTitleW(f'title Folders found: {i}')
+		ctypes.windll.kernel32.SetConsoleTitleW(f'Folders found: {i}')
 		for j in soft:
 			clean()
 			banner()
 			print(Fore.GREEN + '')
-			ctypes.windll.kernel32.SetConsoleTitleW(f'title Working with {j}')
+			ctypes.windll.kernel32.SetConsoleTitleW(f'Working with {j}')
 			os.system(f'upx --best "{j}"')
 		clean()
 		banner()

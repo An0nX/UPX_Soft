@@ -29,6 +29,8 @@ print(Fore.GREEN + 'Работа программы может занять дл
 
 i = 0
 for drive in GetLogicalDriveStrings().split('\000')[:-1]:
+	if f'{os.getenv("SystemDrive")}' in drive:
+		continue
 	sleep(drv)
 	for root, _, _ in walk(drive):
 		sleep(fol)
@@ -37,8 +39,6 @@ for drive in GetLogicalDriveStrings().split('\000')[:-1]:
 		targetPattern = rf"{root}\*.exe"
 		soft = glob.glob(targetPattern)
 		if soft == list():
-			continue
-		if f'{os.getenv("SystemDrive")}' in root:
 			continue
 		i += 1
 		ctypes.windll.kernel32.SetConsoleTitleW(f'Folders found: {i}')
